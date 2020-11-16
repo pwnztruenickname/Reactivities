@@ -1,6 +1,8 @@
+using Application.Activities;
+using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -43,6 +45,8 @@ namespace API
                         .WithOrigins("http://localhost:3000");
                 });
             });
+
+            services.AddMediatR(typeof(List.Handler).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -5,10 +5,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\Persistence\Persistence.csproj" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
