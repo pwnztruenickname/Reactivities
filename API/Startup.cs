@@ -1,3 +1,4 @@
+using System.Reflection;
 using Application.Activities;
 using MediatR;
 using MediatR;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Persistence;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace API
 {
@@ -33,6 +35,9 @@ namespace API
             services.AddSwaggerGen((option) =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "Reactivities", Version = "v1" });
+
+                // UseFullTypeNameInSchemaIds replacement for .NET Core
+                option.CustomSchemaIds(x => x.FullName);
             });
 
             services.AddCors(opt =>
@@ -58,6 +63,7 @@ namespace API
             }
             app.UseRouting();
             app.UseCors("CorsPolicy");
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             app.UseSwagger();
