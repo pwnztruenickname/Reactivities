@@ -6,7 +6,7 @@ import ActivityDashboard from '../../features/activities/dashboard/ActivityDashb
 import agent from '../api/agent';
 import LoadingComponent from './LoadingComponent';
 import ActivityStore from '../stores/activityStore';
-import { observer } from 'mobx-react-lite';
+import {observer} from 'mobx-react-lite'
 
 
 const App = () => {
@@ -53,6 +53,7 @@ const App = () => {
             setActivities([...activities.filter(a => a.id !== id)])
         }).then(() => setSubmitting(false))
     }
+
     useEffect(() => {
         activityStore.loadActivities()
     }, [activityStore]);
@@ -64,7 +65,7 @@ const App = () => {
             <NavBar openCreateForm={handleOpenCreateForm} />
             <Container style={{ marginTop: '7em' }}>
                 <ActivityDashboard
-                    activities={activities}
+                    activities={activityStore.activities}
                     selectActivity={handleSelectActivity}
                     selectedActivity={selectedActivity}
                     editMode={editMode}
