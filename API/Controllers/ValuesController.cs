@@ -28,6 +28,10 @@ namespace API.Controllers
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
             var result = await _context.Values.ToListAsync();
+
+            if (result == null)
+                return NotFound();
+
             return Ok(result);
         }
 

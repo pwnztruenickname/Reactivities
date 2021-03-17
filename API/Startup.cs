@@ -1,6 +1,6 @@
-using System.Reflection;
+using API.Middleware;
 using Application.Activities;
-using MediatR;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,7 +10,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Persistence;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace API
 {
@@ -30,7 +29,11 @@ namespace API
             {
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(cfg =>
+                {
+                    cfg.RegisterValidatorsFromAssemblyContaining<Create>();
+                });
 
             services.AddSwaggerGen((option) =>
             {
@@ -57,9 +60,11 @@ namespace API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
             }
             app.UseRouting();
             app.UseCors("CorsPolicy");
