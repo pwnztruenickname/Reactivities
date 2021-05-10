@@ -3,17 +3,18 @@ import React, { useContext, useEffect } from 'react'
 import { Grid, GridColumn } from 'semantic-ui-react'
 import LoadingComponent from '../../../app/layout/LoadingComponent'
 import ActivityList from './ActivityList'
-import ActivityStore from '../../../app/stores/activityStore'
+import { RootStoreContext } from '../../../app/stores/rootStore'
 
 const ActivityDashboard: React.FC = () => {
 
-    const activityStore = useContext(ActivityStore);
+    const rootStore = useContext(RootStoreContext);
+    const {loadActivities, loadingInitial} = rootStore.activityStore
 
     useEffect(() => {
-        activityStore.loadActivities()
-    }, [activityStore]);
+        loadActivities()
+    }, [loadActivities]);
 
-    if (activityStore.loadingInitial) return <LoadingComponent content={'Loading activities...'} />
+    if (loadingInitial) return <LoadingComponent content={'Loading activities...'} />
 
     return (
         <Grid>
