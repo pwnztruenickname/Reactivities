@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
-namespace Domain
+namespace Application.Activities
 {
-    /// <summary>
-    /// Мероприятия
-    /// </summary>
-    public class Activity
+    public class ActivityDto
     {
         public Guid Id { get; set; }
 
@@ -22,6 +20,7 @@ namespace Domain
 
         public string Venue { get; set; }
 
-        public virtual ICollection<UserActivity> UserActivities { get; set; }
+        [JsonPropertyName("attendees")]
+        public ICollection<AttendeeDto> UserActivities { get; set; }
     }
 }
